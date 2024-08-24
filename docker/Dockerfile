@@ -15,6 +15,9 @@ FROM node:20-alpine
 # Install runtime dependencies
 RUN apk add --no-cache chromium git python3 py3-pip make g++ build-base cairo-dev pango-dev
 
+# Install node-fetch for fetch support
+RUN npm install node-fetch@2
+
 # Set the environment variable for Puppeteer to find Chromium
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
