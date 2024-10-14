@@ -238,6 +238,7 @@ const prepareAgent = async (
     options: ICommonObject,
     flowObj: { sessionId?: string; chatId?: string; input?: string }
 ) => {
+    const sourceDocumentsContent = flowObj?.sourceDocuments ? flatten(flowObj.sourceDocuments).map(doc => doc.pageContent).join('\n\n') : '';
     const model = nodeData.inputs?.model as BaseChatModel
     const maxIterations = nodeData.inputs?.maxIterations as string
     const memory = nodeData.inputs?.memory as FlowiseMemory
@@ -251,7 +252,7 @@ const prepareAgent = async (
     let prompt = ChatPromptTemplate.fromMessages([
         ['system', systemMessage],
         new MessagesPlaceholder(memoryKey),
-        ['human', `{${inputKey}}`],
+        ['human', `{${inputKey}}\n\nSources:\n${sourceDocumentsContent}`],
         new MessagesPlaceholder('agent_scratchpad')
     ])
 
