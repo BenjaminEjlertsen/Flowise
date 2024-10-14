@@ -126,7 +126,7 @@ class ToolAgent_Agents implements INode {
             }
         }
 
-        const executor = await prepareAgent(nodeData, options, { sessionId: this.sessionId, chatId: options.chatId, input , sourceDocuments})
+        const executor = await prepareAgent(nodeData, options, { sessionId: this.sessionId, chatId: options.chatId, input, sourceDocuments })
 
         const loggerHandler = new ConsoleCallbackHandler(options.logger)
         const callbacks = await additionalCallbacks(nodeData, options)
@@ -238,7 +238,7 @@ const prepareAgent = async (
     options: ICommonObject,
     flowObj: { sessionId?: string; chatId?: string; input?: string; sourceDocuments?: ICommonObject[] }
 ) => {
-    const sourceDocumentsContent = flowObj?.sourceDocuments ? flatten(flowObj.sourceDocuments).map(doc => doc.pageContent).join('\n\n') : '';
+    const sourceDocumentsContent = flowObj?.sourceDocuments ? flatten(flowObj.sourceDocuments).map((doc) => doc.pageContent).join('\n\n') : '';
     const model = nodeData.inputs?.model as BaseChatModel
     const maxIterations = nodeData.inputs?.maxIterations as string
     const memory = nodeData.inputs?.memory as FlowiseMemory
