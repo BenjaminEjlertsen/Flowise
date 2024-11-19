@@ -39,7 +39,7 @@ class Retriever_Tools implements INode {
                 label: 'Retriever Description',
                 name: 'description',
                 type: 'string',
-                description: 'When should agent uses to retrieve documents',
+                description: 'When should the agent use this tool to retrieve documents',
                 rows: 3,
                 placeholder: 'Searches and returns documents regarding the state-of-the-union.'
             },
