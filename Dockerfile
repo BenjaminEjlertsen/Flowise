@@ -16,20 +16,22 @@ RUN apk add --no-cache chromium
 # Fixes: https://github.com/FlowiseAI/Flowise/issues/4126
 RUN apk add --no-cache curl
 
-#install PNPM globaly
-RUN npm install -g pnpm
+# Install the pnpm version pinned in package.json ("packageManager").
+# An unpinned install pulls the latest pnpm major, which does not match
+# pnpm-lock.yaml and fails on unapproved dependency build scripts.
+WORKDIR /usr/src
+COPY package.json ./
+RUN npm install -g "pnpm@$(node -p "require('./package.json').packageManager.split('@')[1]")"
 
 ENV PUPPETEER_SKIP_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 ENV NODE_OPTIONS=--max-old-space-size=8192
 
-WORKDIR /usr/src
-
 # Copy app source
 COPY . .
 
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 RUN pnpm build
 
